@@ -1,0 +1,22 @@
+{% load static %}
+<div id="menu">
+    <form method="get" id="properties-form" action="{% url 'Properties' %}">
+        {% csrf_token %}
+        <label for="properties-submit">
+            <img src="{% static 'Core/images/about.png' %}" alt="about"/>
+        </label>
+        <input type="hidden" name="name" value="" class="form-name">
+        <input id="properties-submit" type="submit" value="Свойства"/>
+    </form>
+    <form method="get" id="battle-form" action="{% url 'Fight' %}">
+        {% csrf_token %}
+        <label for="battle-submit">
+            <img src="{% static 'Core/images/fight.png' %}" alt="fight"/>
+        </label>
+        <input type="hidden" name="name" value="" class="form-name">
+        <input id="battle-submit" type="submit" value="В бой"/>
+    </form>
+
+</div>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'Core/styles/menu.css' %}">

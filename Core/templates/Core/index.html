@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    PokeDex
+{% endblock title %}
+{% block head_additional %}
+    <script type="module" src="{% static 'Core/js/index.js' %}"></script>
+{% endblock head_additional %}
+{% block content %}
+    {% include 'Core/grid.html' %}
+{% endblock content %}
+{% block body_additional %}
+    {% include "Core/right_click_menu.html" %}
+{% endblock body_additional %}

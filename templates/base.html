@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" class="min-vh-100">
+<head>
+    <title>{% block title %}PokeDex{% endblock title %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="shortcut icon" type="image/ico" href="{% static 'images/favicon.ico' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block head_additional %}
+    {% endblock head_additional %}
+</head>
+
+<body>
+{% include "nav.html" %}
+<div class="d-flex flex-row flex-grow-1">
+    <div class="position-relative w-100" id="main-container"
+         style="height:calc(100vh - 70px);overflow: auto;overflow-x: hidden">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</div>
+{% include "modal.html" %}
+{% include 'toast.html' %}
+{% block body_additional %}
+{% endblock body_additional %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-sm bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'Index' %}" draggable="false">
+            {% load static %}
+            <img src="{% static 'images/logo.png' %}" alt="Logo" width="30" height="30"
+                 class="d-inline-block align-text-top" draggable="false">
+            PokeDex
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <form id="searchbar" class="d-flex" role="search" action="{% url 'Search' %}">
+                        <input class="form-control me-2" type="search" placeholder="Search" name="name"
+                               aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
