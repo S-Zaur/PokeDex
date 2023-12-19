@@ -21,6 +21,8 @@ export function hitSubmitHandler(e) {
                     $("#hit-submit").attr("disabled", "disabled");
                     $("#battle-form").css("display", "block");
                     $("#revenge-form").css("display", "block");
+                    $("#fast-fight-submit").attr("disabled", "disabled");
+                    $("#email-form").css("display", "block");
                 }
             }
             if ("opponent_pokemon" in data) {
@@ -30,6 +32,8 @@ export function hitSubmitHandler(e) {
                     battle_log.append($("<div>").append($("<b>").append(document.createTextNode("Вы выиграли"))));
                     $("#hit-submit").attr("disabled", "disabled");
                     $("#battle-form").css("display", "block");
+                    $("#fast-fight-submit").attr("disabled", "disabled");
+                    $("#email-form").css("display", "block");
                 }
             }
         },

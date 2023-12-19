@@ -108,3 +108,23 @@ def fight_start(player_pokemon, opponent_pokemon):
     return {"player_pokemon": get_pokemon(player_pokemon).to_json(),
             "opponent_pokemon": get_pokemon(opponent_pokemon).to_json(),
             "round_count": 0}
+
+
+def fight_fast(request, player_pokemon: Pokemon, opponent_pokemon: Pokemon):
+    description_list = []
+    while player_pokemon.hp > 0 and opponent_pokemon.hp > 0:
+        if (random.randint(1, 10) % 2) == (random.randint(1, 10) % 2):
+            description_list.append({"description": hit(player_pokemon, opponent_pokemon)})
+        else:
+            description_list.append({"description": hit(opponent_pokemon, player_pokemon)})
+    FightResult.objects.create(player_pokemon=player_pokemon.name,
+                               opponent_pokemon=opponent_pokemon.name,
+                               result=opponent_pokemon.hp == 0,
+                               rounds_count=len(description_list),
+                               battle_date=timezone.localtime(),
+                               user=request.user if request.user.is_authenticated else None)
+    return {
+        "player_pokemon": player_pokemon.to_json(),
+        "opponent_pokemon": opponent_pokemon.to_json(),
+        "description_list": description_list
+    }

@@ -7,6 +7,8 @@ urlpatterns = [
     path("properties/", views.properties, name="Properties"),
     path("search/", views.search, name="Search"),
     path("fight/", views.fight, name="Fight"),
+    path("fast/", views.fast, name="Fast"),
     path("revenge/", views.revenge, name="Revenge"),
     path("hit/", views.hit, name="Hit"),
+    path("email/", views.send_email, name="SendMail"),
 ]
