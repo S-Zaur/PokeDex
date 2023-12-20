@@ -1,4 +1,7 @@
+import datetime
+import io
 import json
+from ftplib import FTP
 
 from django.conf import settings
 from django.core.exceptions import SuspiciousOperation
@@ -71,4 +74,20 @@ def send_email(request):
         message = f"ваш покемон {request.POST['player_pokemon']} встретился с {request.POST['opponent_pokemon']} в результате боя он {'победил' if request.POST['result'] == 'WIN' else 'проиграл'}"
         EmailMessage("PokeFight", message, email_from, recipient_list, connection=connection).send()
 
+    return JsonResponse({"result": "ok"})
+
+
+def save(request):
+    pokemon = get_pokemon(request.POST["name"])
+    with FTP(settings.FTP_SERVER) as ftp:
+        ftp.login(user=settings.FTP_USERNAME, passwd=settings.FTP_PASSWORD)
+        folder_name = datetime.datetime.today().strftime("%Y%m%d")
+        if folder_name not in ftp.nlst():
+            ftp.mkd(folder_name)
+        result = f"# {pokemon.name}\n "
+        result += f"|   Property   | Description |\n| ----------- | ----------- |\n"
+        for key in pokemon.__dict__:
+            result += f"|{key}|{pokemon.__dict__[key]}|\n"
+        bio = io.BytesIO(result.encode('ascii'))
+        ftp.storbinary(f'STOR {folder_name}/{pokemon.name}.md', bio)
     return JsonResponse({"result": "ok"})
