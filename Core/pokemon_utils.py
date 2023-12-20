@@ -1,6 +1,7 @@
 import random
 
 import requests as r
+from django.core.cache import cache
 from django.http import Http404
 from django.urls import reverse
 from django.utils import timezone
@@ -18,6 +19,10 @@ def get_payload(request):
 
 
 def pokemons_list(payload, base_page=None):
+    sentinel = object()
+    result = cache.get((str(payload) + base_page).replace(' ', '_'), sentinel)
+    if result is not sentinel:
+        return result
     response = r.get('https://pokeapi.co/api/v2/pokemon', params=payload).json()
     if base_page is None:
         base_page = reverse("Index")
@@ -27,14 +32,20 @@ def pokemons_list(payload, base_page=None):
               "next": next_page,
               "prev": prev_page,
               "pokemons": parce_pokemons(response['results'])}
+    cache.set((str(payload) + base_page).replace(' ', '_'), result)
     return result
 
 
 def get_pokemon(pokemon_id):
+    sentinel = object()
+    result = cache.get(str(pokemon_id), sentinel)
+    if result is not sentinel:
+        return result
     response = r.get('https://pokeapi.co/api/v2/pokemon/' + str(pokemon_id))
     if response.status_code == 404:
         raise Http404
     result = parce_pokemon(response.json())
+    cache.set(str(pokemon_id), result)
     return result
 
 
