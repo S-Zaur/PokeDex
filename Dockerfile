@@ -4,6 +4,8 @@ LABEL Author="S-Zaur"
 
 ENV PYTHONUNBUFFERED 1
 
+RUN apk add firefox
+
 COPY ./requirements.txt /requirements.txt
 
 RUN pip install -r requirements.txt

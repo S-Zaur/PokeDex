@@ -21,6 +21,21 @@ services:
       pokemons-ftp:
         condition: service_started
 
+  pokemons-test:
+    image: szaur/pokedex:latest
+    container_name: pokemons-test
+    env_file: .env
+    command: >
+      /bin/sh -c "python3 manage.py test --no-input"
+    volumes:
+      - ./app:/app
+    depends_on:
+      pokemons-database:
+        condition: service_healthy
+      pokemons-migrate:
+        condition: service_completed_successfully
+      pokemons-start:
+        condition: service_started
 
   pokemons-migrate:
     image: szaur/pokedex:latest
