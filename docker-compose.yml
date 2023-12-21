@@ -1,0 +1,64 @@
+version: "3"
+services:
+  pokemons-start:
+    image: szaur/pokedex:latest
+    container_name: pokemons-start
+    ports:
+      - "8000:8000"
+      - "80:8000"
+    volumes:
+      - ./app:/app
+    env_file: .env
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      pokemons-database:
+        condition: service_healthy
+      pokemons-migrate:
+        condition: service_completed_successfully
+      pokemons-redis:
+        condition: service_started
+      pokemons-ftp:
+        condition: service_started
+
+
+  pokemons-migrate:
+    image: szaur/pokedex:latest
+    container_name: pokemons-migrate
+    env_file: .env
+    command: >
+      /bin/sh -c "python3 manage.py makemigrations --force-color --no-input -v 3 && python3 manage.py migrate --force-color -v 3 && python3 manage.py createsuperuser --noinput; exit 0"
+    volumes:
+      - ./app:/app
+    depends_on:
+      pokemons-database:
+        condition: service_healthy
+
+  pokemons-database:
+    image: postgres:13-alpine
+    container_name: pokemons-database
+    ports:
+      - "5432:5432"
+    volumes:
+      - pokemons-pgdbdata:/var/lib/postgresql/data
+    env_file: .env
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+
+  pokemons-ftp:
+    image: delfer/alpine-ftp-server:latest
+    container_name: pokemons-ftp
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
+    env_file: .env
+
+  pokemons-redis:
+    image: redis:7.0-alpine
+    container_name: pokemons-redis
+    ports:
+      - "6379:6379"
+    env_file: .env
+
+volumes:
+  pokemons-pgdbdata: null
