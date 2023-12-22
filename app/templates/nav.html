@@ -17,6 +17,20 @@
                     </form>
                 </li>
             </ul>
+            {% if request.user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success me-2">Выйти</button>
+                </form>
+                <a href="{% url 'account' %}" class="btn btn-outline-success me-2" role="button">
+                    Аккаунт
+                </a>
+            {% else %}
+                <form method="get" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success me-2">Войти</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 </nav>
