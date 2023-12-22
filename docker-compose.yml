@@ -75,5 +75,18 @@ services:
       - "6379:6379"
     env_file: .env
 
+  pokemons-grafana:
+    image: grafana/grafana:latest
+    container_name: pokemons-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/postgres.yaml:/etc/grafana/provisioning/datasources/postgres.yaml
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    env_file: .env
+    environment:
+      - GF_LOG_LEVEL=warn
+
 volumes:
   pokemons-pgdbdata: null

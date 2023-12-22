@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+    Dashboards
+{% endblock title %}
+{% block content %}
+    <div id="grid" class="grid row row-cols-1 row-cols-lg-2 p-2">
+        <div class="col d-flex align-items-stretch mb-3">
+            <div class="card w-100">
+                <iframe style="min-height: 300px;"
+                        src="http://127.0.0.1:3000/d-solo/daf058e3-85c2-46eb-b366-ae6948afcd1c/pokemony?orgId=1&from=1702050940926&to=1703260540926&panelId=3"></iframe>
+            </div>
+        </div>
+        <div class="col d-flex align-items-stretch mb-3">
+            <div class="card w-100">
+                <iframe style="min-height: 300px;"
+                        src="http://127.0.0.1:3000/d-solo/daf058e3-85c2-46eb-b366-ae6948afcd1c/pokemony?orgId=1&from=1702051307136&to=1703260907136&panelId=1"></iframe>
+            </div>
+        </div>
+        <div class="col d-flex align-items-stretch mb-3">
+            <div class="card w-100">
+                <iframe style="min-height: 300px;"
+                        src="http://127.0.0.1:3000/d-solo/daf058e3-85c2-46eb-b366-ae6948afcd1c/pokemony?orgId=1&from=1702051333304&to=1703260933304&panelId=2"></iframe>
+            </div>
+        </div>
+        <div class="col d-flex align-items-stretch mb-3">
+            <div class="card w-100">
+                <iframe style="min-height: 300px;"
+                        src="http://127.0.0.1:3000/d-solo/daf058e3-85c2-46eb-b366-ae6948afcd1c/pokemony?orgId=1&from=1702051345984&to=1703260945984&panelId=4"></iframe>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

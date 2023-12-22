@@ -91,3 +91,7 @@ def save(request):
         bio = io.BytesIO(result.encode('ascii'))
         ftp.storbinary(f'STOR {folder_name}/{pokemon.name}.md', bio)
     return JsonResponse({"result": "ok"})
+
+
+def dashboards(request):
+    return render(request, "Core/dashboards.html")

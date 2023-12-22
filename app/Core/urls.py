@@ -12,4 +12,5 @@ urlpatterns = [
     path("hit/", views.hit, name="Hit"),
     path("email/", views.send_email, name="SendMail"),
     path("save/", views.save, name="Save"),
+    path("dashboards", views.dashboards, name="Dashboards"),
 ]
